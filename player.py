@@ -42,17 +42,17 @@ class Player():
         self.rect.y = 700
 
     def move_left(self):
-        if self.rect.x >= 40:
+        if self.rect.x >= 150:
             self.rect.x -= self.speed
 
     def move_right(self):
-        if self.rect.x <= 856:
+        if self.rect.x <= 642:
             self.rect.x += self.speed
 
     def move_up(self):
-        if self.rect.y >= 40:
+        if self.rect.y >= 150:
             self.rect.y -= self.speed
 
     def move_down(self):
-        if self.rect.y <= 792:
+        if self.rect.y <= 642:
             self.rect.y += self.speed

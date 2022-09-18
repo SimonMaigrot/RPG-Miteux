@@ -9,6 +9,7 @@ HEIGHT = 896
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
 clock = pygame.time.Clock()
 STAT = "spawn"
+pygame.display.set_caption("Rpg Miteux")
 
 # Variables
 player = Player()
@@ -21,6 +22,8 @@ counter = 0
 '''Boucle Jeu'''
 running = True
 while running:
+    print(pygame.Surface.get_at(screen, (player.rect.x, player.rect.y)))
+    # Events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             running = False
@@ -34,25 +37,25 @@ while running:
         counter = 0
     # Movement
     pressed = pygame.key.get_pressed()
-    if pressed[pygame.K_LEFT]:
+    if pressed[pygame.K_LEFT] or pressed[pygame.K_q]:
         player.image = player.tab_left[counter]
         player.move_left()
         if player.rect.x <= map.limit:
             map.move_right()
 
-    if pressed[pygame.K_RIGHT]:
+    if pressed[pygame.K_RIGHT] or pressed[pygame.K_d]:
         player.image = player.tab_right[counter]
         player.move_right()
-        if player.rect.x >= 896 - map.limit:
+        if player.rect.x >= 792 - map.limit:
             map.move_left()
 
-    if pressed[pygame.K_DOWN]:
+    if pressed[pygame.K_DOWN] or pressed[pygame.K_s]:
         player.image = player.tab_down[counter]
         player.move_down()
         if player.rect.y >= 792 - map.limit:
             map.move_up()
 
-    if pressed[pygame.K_UP]:
+    if pressed[pygame.K_UP] or pressed[pygame.K_z]:
         player.image = player.tab_up[counter]
         player.move_up()
         if player.rect.y <= map.limit:
@@ -62,9 +65,16 @@ while running:
     if STAT == "menu":
         None
     if STAT == "spawn":
+        # Fenêtre
         screen.blit(screen, (0, 0))
         screen.fill([0, 0, 0])
-        screen.blit(map.image, map.rect) 
+        # Map surface
+        screen.blit(map.surface_collision_map, (-400, -1660))
+        # Map collision
+        screen.blit(map.collision_map, map.collision_map_rect)
+        # Map neutre
+        screen.blit(map.image, map.rect)
+        # Player
         screen.blit(player.image, player.rect)
     clock.tick(60)
     pygame.display.flip()
